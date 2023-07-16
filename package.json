@@ -1,0 +1,14 @@
+{
+  "name": "my-chat-app",
+  "version": "1.0.0",
+  "description": "My chat application",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^3.1.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
