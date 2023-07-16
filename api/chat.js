@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
         body: JSON.stringify({
             messages: req.body.messages,
             key: process.env.API_KEY,
-            model: 'gpt-4'
+            model: 'gpt-3.5-turbo'
         }),
     });
 
