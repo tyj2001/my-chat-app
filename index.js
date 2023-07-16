@@ -16,7 +16,7 @@ app.post('/chat', async (req, res) => {
       max_tokens: 100,
     }, {
         headers: {
-          'Authorization': `Bearer YOUR_PURGPT_API_KEY`,
+          'Authorization': `Bearer ${process.env.PURGPT_API_KEY}`,
           'Content-Type': 'application/json'
         }
       }
