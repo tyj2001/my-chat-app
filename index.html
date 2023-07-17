@@ -6,51 +6,7 @@
     <title>Chat with gpt-3.5-turbo</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- 这是favicon的链接 -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        #chatbox {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 1rem;
-            border: 1px solid #ccc;
-        }
-
-        .form-item {
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            background: white;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
-
-        .username-txt {
-            width: 100%;
-            padding: 0.5rem;
-            box-sizing: border-box;
-        }
-
-        .chat-message {
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .chat-message.user-message {
-            color: blue;
-            font-weight: bold;
-        }
-
-        .chat-message.ai-message {
-            color: red;
-        }
+        /* ... 这里是之前的CSS样式代码 ... */
     </style>
 </head>
 <body>
@@ -72,12 +28,12 @@
             }
         });
 
-        function sendMessage(message) {
+        async function sendMessage(message) {
             // 添加用户消息
             addChatMessage('You', message, 'user-message');
 
-            // 假设这个函数会发送消息并获取回复
-            const reply = getReplyFromAPI(message);
+            // 发送消息并获取回复
+            const reply = await getReplyFromAPI(message);
 
             // 添加机器人消息
             addChatMessage('AI', reply, 'ai-message');
@@ -97,9 +53,23 @@
             chatbox.scrollTop = chatbox.scrollHeight;
         }
 
-        function getReplyFromAPI(message) {
-            // 这里应该是你的API调用，此处仅为示例
-            return "This is a reply from the API.";
+        async function getReplyFromAPI(message) {
+            // 这里是一个假设的API URL和请求参数，你需要按照你自己的API文档来修改它
+            const apiUrl = 'https://purgpt.xyz/v1/chat/completions';
+            const params = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            };
+
+            // 发送请求并获取回复
+            const response = await fetch(apiUrl, params);
+            const data = await response.json();
+
+            // 假设回复在data.reply中，你需要按照你自己的API文档来修改它
+            return data.reply;
         }
     </script>
 </body>
