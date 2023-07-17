@@ -68,19 +68,6 @@
         .username-txt:valid~.line {
             width: 200px;
         }
-
-        button {
-            width: 100%;
-            padding: 0.5rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
@@ -92,8 +79,16 @@
         <label for="username">User Name</label>
     </div>
 
-    <button onclick="sendMessage()">Send</button>
-
     <script src="chat.js"></script>
+    <script>
+        const input = document.getElementById('username');
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
