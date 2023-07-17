@@ -44,7 +44,12 @@
 <body>
     <div id="chatbox"></div>
 
-    <input type="text" id="inputBox" placeholder="Type your message...">
+    <div class="form-item">
+    <input required autocomplete="off" type="text" id="username" class="username-txt">
+    <span class="line"></span>
+    <label for="username">User Name</label>
+</div>
+
     <button onclick="sendMessage()">Send</button>
 
     <script src="chat.js"></script>
