@@ -1,3 +1,5 @@
+var conversationHistory = [];
+
 function sendMessage() {
     var inputBox = document.getElementById('inputBox');
     var message = inputBox.value;
