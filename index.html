@@ -11,6 +11,9 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         #chatbox {
@@ -18,55 +21,35 @@
             overflow-y: auto;
             padding: 1rem;
             border: 1px solid #ccc;
-            margin-bottom: 1rem;
         }
 
         .form-item {
-            width: 200px;
-            position: relative;
-            left: 30%;
-            top: 100px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            background: white;
+            padding: 1rem;
+            box-sizing: border-box;
         }
 
         .username-txt {
+            width: 100%;
+            padding: 0.5rem;
             box-sizing: border-box;
-            outline: none;
-            padding: 0;
-            width: 200px;
-            height: 50px;
-            border: 0;
-            border-bottom: 2px solid #ccc;
-            font-size: 16px;
         }
 
-        .line {
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            transform: translateX(-50%);
-            display: inline-block;
-            width: 0;
-            border-bottom: 2px solid #5264ae;
-            transition: 0.4s ease;
+        .chat-message {
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
 
-        label {
-            position: absolute;
-            left: 0;
-            line-height: 50px;
-            color: #ccc;
-            transition: 0.4s ease;
+        .chat-message.user-message {
+            color: blue;
+            font-weight: bold;
         }
 
-        .username-txt:focus~label,
-        .username-txt:valid~label {
-            transform: translateY(-30px);
-            font-size: 14px;
-        }
-
-        .username-txt:focus~.line,
-        .username-txt:valid~.line {
-            width: 200px;
+        .chat-message.ai-message {
+            color: red;
         }
     </style>
 </head>
@@ -75,8 +58,6 @@
 
     <div class="form-item">
         <input required autocomplete="off" type="text" id="username" class="username-txt">
-        <span class="line"></span>
-        <label for="username">User Name</label>
     </div>
 
     <script>
@@ -93,21 +74,22 @@
 
         function sendMessage(message) {
             // 添加用户消息
-            addChatMessage('You', message);
+            addChatMessage('You', message, 'user-message');
 
             // 假设这个函数会发送消息并获取回复
             const reply = getReplyFromAPI(message);
 
             // 添加机器人消息
-            addChatMessage('AI', reply);
+            addChatMessage('AI', reply, 'ai-message');
 
             // 滚动到底部
             scrollToBottom();
         }
 
-        function addChatMessage(sender, message) {
+        function addChatMessage(sender, message, senderClass) {
             const newMessage = document.createElement('p');
             newMessage.textContent = `${sender}: ${message}`;
+            newMessage.classList.add('chat-message', senderClass);
             chatbox.appendChild(newMessage);
         }
 
