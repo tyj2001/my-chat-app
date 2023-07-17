@@ -1,8 +1,3 @@
-// Initialize the conversation history
-var conversationHistory = [
-    {role: 'system', content: 'You are a helpful assistant.'}
-];
-
 function sendMessage() {
     var inputBox = document.getElementById('inputBox');
     var message = inputBox.value;
@@ -23,13 +18,22 @@ function sendMessage() {
             messages: conversationHistory
         }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         // Add the assistant's message to the chat box and the history
         var assistantMessage = data['choices'][0]['message']['content'];
         chatbox.innerHTML += '<p><b>Assistant:</b> ' + assistantMessage + '</p>';
         chatbox.scrollTop = chatbox.scrollHeight;
         conversationHistory.push({role: 'assistant', content: assistantMessage});
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        chatbox.innerHTML += '<p><b>System:</b> An error occurred. Please try again later.</p>';
     });
 }
 
@@ -38,4 +42,3 @@ document.getElementById('inputBox').addEventListener('keydown', function(e) {
         sendMessage();
     }
 });
-
