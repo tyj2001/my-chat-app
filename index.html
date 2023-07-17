@@ -79,16 +79,46 @@
         <label for="username">User Name</label>
     </div>
 
-    <script src="chat.js"></script>
     <script>
         const input = document.getElementById('username');
+        const chatbox = document.getElementById('chatbox');
 
         input.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                sendMessage();
                 e.preventDefault();
+                sendMessage(input.value);
+                input.value = '';
             }
         });
+
+        function sendMessage(message) {
+            // 添加用户消息
+            addChatMessage('You', message);
+
+            // 假设这个函数会发送消息并获取回复
+            const reply = getReplyFromAPI(message);
+
+            // 添加机器人消息
+            addChatMessage('AI', reply);
+
+            // 滚动到底部
+            scrollToBottom();
+        }
+
+        function addChatMessage(sender, message) {
+            const newMessage = document.createElement('p');
+            newMessage.textContent = `${sender}: ${message}`;
+            chatbox.appendChild(newMessage);
+        }
+
+        function scrollToBottom() {
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        function getReplyFromAPI(message) {
+            // 这里应该是你的API调用，此处仅为示例
+            return "This is a reply from the API.";
+        }
     </script>
 </body>
 </html>
