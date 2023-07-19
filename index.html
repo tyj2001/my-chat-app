@@ -1,19 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with gpt-3.5-turbo</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- 这是favicon的链接 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- 添加来自你新输入框设计的样式代码 -->
     <style>
-        /* ... 这里是之前的CSS样式代码 ... */
+        .form-item {
+            width: 200px;
+            position: relative;
+            left: 30%;
+            top: 100px;
+        }
+
+        .username-txt {
+            box-sizing: border-box;
+            outline: none;
+            padding: 0;
+            width: 200px;
+            height: 50px;
+            border: 0;
+            border-bottom: 2px solid #ccc;
+            font-size: 16px;
+        }
+
+        .line {
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            display: inline-block;
+            width: 0;
+            border-bottom: 2px solid #5264ae;
+            transition: 0.4s ease;
+        }
+
+        label {
+            position: absolute;
+            left: 0;
+            line-height: 50px;
+            color: #ccc;
+            transition: 0.4s ease;
+        }
+
+        .username-txt:focus~label,
+        .username-txt:valid~label {
+            transform: translateY(-30px);
+            font-size: 14px;
+        }
+
+        .username-txt:focus~.line,
+        .username-txt:valid~.line {
+            width: 200px;
+        }
     </style>
 </head>
+
 <body>
     <div id="chatbox"></div>
 
+    <!-- 使用新设计的输入框 -->
     <div class="form-item">
         <input required autocomplete="off" type="text" id="username" class="username-txt">
+        <span class="line"></span>
+        <label for="username">User Name</label>
     </div>
 
     <script>
@@ -73,4 +126,5 @@
         }
     </script>
 </body>
+
 </html>
