@@ -114,7 +114,7 @@
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "messages": [{"role": "system", "content": "你是一个有用的助理。"},{"role": "user", "content": message}] }),
+       body: JSON.stringify({ message: message })
         mode: 'no-cors' // 使用 'no-cors' 模式
     };
 
