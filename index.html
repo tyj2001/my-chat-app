@@ -55,7 +55,8 @@
 
         async function getReplyFromAPI(message) {
             // 这里是一个假设的API URL和请求参数，你需要按照你自己的API文档来修改它
-            const apiUrl = 'https://purgpt.xyz/v1/chat/completions';
+                // 在你原有URL前添加CORS代理服务器
+    const url = 'https://cors-anywhere.herokuapp.com/https://purgpt.xyz/v1/chat/completions';
             const params = {
                 method: 'POST',
                 headers: {
