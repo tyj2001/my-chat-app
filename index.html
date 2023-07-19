@@ -54,23 +54,25 @@
         }
 
         async function getReplyFromAPI(message) {
-            // 这里是一个假设的API URL和请求参数，你需要按照你自己的API文档来修改它
-                // 在你原有URL前添加CORS代理服务器
-    const url = 'https://cors-anywhere.herokuapp.com/https://purgpt.xyz/v1/chat/completions';
+            const url = '/api/proxy';  // 更改为使用你的代理地址
             const params = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ message: message })
+                body: JSON.stringify({ 
+                    model: "text-davinci-002",   // 示例中的参数，可能需要根据实际情况修改
+                    prompt: message,
+                    temperature: 0.5,
+                    max_tokens: 150
+                 })
             };
 
-            // 发送请求并获取回复
-            const response = await fetch(apiUrl, params);
+            const response = await fetch(url, params);
             const data = await response.json();
 
-            // 假设回复在data.reply中，你需要按照你自己的API文档来修改它
-            return data.reply;
+            // 假设回复在data.choices[0].text中，你可能需要根据你的API响应来调整
+            return data.choices[0].text;
         }
     </script>
 </body>
