@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat with gpt-3.5-turbo</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- 这是favicon的链接 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        /* ... 这里是之前的CSS样式代码 ... */
+        /*您的CSS样式*/
     </style>
 </head>
 <body>
@@ -36,7 +36,11 @@
             const reply = await getReplyFromAPI(message);
 
             // 添加机器人消息
-            addChatMessage('AI', reply, 'ai-message');
+            if (reply) {
+                addChatMessage('AI', reply, 'ai-message');
+            } else {
+                addChatMessage('AI', 'Sorry, I could not process the message.', 'ai-message');
+            }
 
             // 滚动到底部
             scrollToBottom();
@@ -54,25 +58,36 @@
         }
 
         async function getReplyFromAPI(message) {
-            const url = '/api/proxy';  // 更改为使用你的代理地址
+            const url = '/api/proxy';
             const params = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ 
-                    model: "text-davinci-002",   // 示例中的参数，可能需要根据实际情况修改
+                    model: "text-davinci-002",
                     prompt: message,
                     temperature: 0.5,
                     max_tokens: 150
-                 })
+                })
             };
 
-            const response = await fetch(url, params);
-            const data = await response.json();
+            try {
+                const response = await fetch(url, params);
+                const data = await response.text();  // 先获取原始文本格式的结果
+        
+                if (!response.ok) {
+                    console.error(`API responded with HTTP ${response.status}: ${data}`);
+                    throw new Error(`API responded with HTTP ${response.status}`);
+                }
+        
+                const jsonData = JSON.parse(data);  // 然后尝试解析它
+                return jsonData.choices[0].text;
+            } catch (err) {
+                console.error(`Failed to get reply from API: ${err}`);
+            }
 
-            // 假设回复在data.choices[0].text中，你可能需要根据你的API响应来调整
-            return data.choices[0].text;
+            return null;
         }
     </script>
 </body>
